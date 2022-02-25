@@ -12,14 +12,14 @@ except mysql.connector.Error as err:
         print(err)
 else:
     cursor = conn.cursor()
-    query = "Select f_name, l_name from students where f_name = '"
+    # query = "Select f_name, l_name from students where f_name = '"
     
     print("Enter First Name")
     myinput = input()
-    query = query + myinput +"'"
+    # query = query + myinput +"'"
     # print (query)
     try:
-        results = cursor.execute("Select f_name, l_name from students where f_name = '" + myinput +"'",multi=True)
+        results = cursor.execute("Select f_name, l_name from students where f_name = '%s'" % myinput,multi=True)
         for result in results:
             if result.with_rows:
                 print("Running query:", result)
