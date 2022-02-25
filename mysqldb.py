@@ -19,7 +19,7 @@ else:
     query = query + myinput +"'"
     # print (query)
     try:
-        results = cursor.execute(query,multi=True)
+        results = cursor.execute("Select f_name, l_name from students where f_name = '" + myinput +"'",multi=True)
         for result in results:
             if result.with_rows:
                 print("Running query:", result)
