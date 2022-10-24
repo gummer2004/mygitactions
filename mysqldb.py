@@ -1,8 +1,15 @@
 import mysql.connector
+import html
 from mysql.connector import errorcode
+#import config/secret store
+import config
+from config import mysqllogin
 
 try:
-    conn = mysql.connector.connect(user='root',password='', database='cr2800',host='127.0.0.1')
+    #conn = mysql.connector.connect(user='root',password='', database='cr2800',host='127.0.0.1')
+    #connect from secret store
+    conn = mysql.connector.connect(**mysqllogin)
+
 except mysql.connector.Error as err:
     if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
         print("Password Error")
@@ -12,14 +19,23 @@ except mysql.connector.Error as err:
         print(err)
 else:
     cursor = conn.cursor()
-    # query = "Select f_name, l_name from students where f_name = '"
+    #query = "Select f_name, l_name from students where f_name = '"
+    #Change to Parameterized query
+    query = """Select f_name, l_name from students where f_name = %s"""
     
     print("Enter First Name")
     myinput = input()
-    # query = query + myinput +"'"
-    # print (query)
+    mystring = html.escape(myinput)
+    print(mystring)
+    #for next class
+    #sanatizedinput = myinput
+    
+    #query = query + myinput +"'"
+    print (query)
     try:
-        results = cursor.execute("Select f_name, l_name from students where f_name = '%s'" % myinput,multi=True)
+        #results = cursor.execute(query,multi=True)
+        #run as parameterized query
+        results = cursor.execute(query,(myinput,),multi=True)
         for result in results:
             if result.with_rows:
                 print("Running query:", result)
