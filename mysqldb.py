@@ -9,9 +9,9 @@ import config
 from config import mysqllogin
 
 try:
-    #conn = mysql.connector.connect(user='root',password='', database='cr2800',host='127.0.0.1')
+    conn = mysql.connector.connect(user='root',password='', database='cr2800',host='127.0.0.1')
     #connect from secret store
-    conn = mysql.connector.connect(**mysqllogin)
+    #conn = mysql.connector.connect(**mysqllogin)
 
 except mysql.connector.Error as err:
     if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
